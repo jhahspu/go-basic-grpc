@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package proto;
+
+// request serialization message
+message Request {
+  // numbers that denote what size should be when serialized
+  // 1- 15 will be max 1byte when serialized
+  // 16 - 2047 will be 2bytes
+  int64 a = 1; 
+  int64 b = 2;
+}
+
+message Response {
+  int64 result = 1; // 1byte long
+}
+
+service AddService {
+  rpc Add(Request) returns (Response);
+  rpc Multiply(Request) returns (Response);
+
+}
+
+
+// BUILD
+
+// 01: copy the from proto/include the "google" folder into a "third_party" folder in the project
+// 02: run following command in main folder
+// protoc --proto_path=proto --proto_path=third_party --go_out=plugins=grpc:proto service.proto
